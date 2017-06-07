@@ -10,75 +10,65 @@ TEST_CASE("describe_defaultConstructorEmpty","[empty]")
 	REQUIRE(list.size()==0);
 }
 
-TEST_CASE("describe_pushFront", "[pushFront]")
+TEST_CASE("add an element with push_front","[modifiers]")
 {
-	List<int> list{};
-	list.push_front(4);
-	REQUIRE(4==*list.begin());
-	list.push_front(5);
-	list.push_front(6);
-	REQUIRE(6==*list.begin());
+List<int> list;
+list.push_front(42);
+REQUIRE(42 == list.front());
 }
 
-TEST_CASE("describe_pushBack", "[pushBack]")
+TEST_CASE("add an element with push_back","[modifiers]")
 {
-	List<int> list{};
-	list.push_back(4);
-	REQUIRE(4==*list.end());
-	list.push_back(5);
-	list.push_back(6);
-	REQUIRE(6==*list.end());
+List<int> list;
+list.push_back(42);
+REQUIRE(42 == list.back());
 }
 
-TEST_CASE("describe_popFront", "[popFront]")
+TEST_CASE("remove an added element with pop_front","[modifiers]")
 {
-	List<int> list{};
-	list.push_front(4);
-	list.pop_front();
-	REQUIRE(list.empty()==true);
-	list.push_front(5);
-	list.push_front(6);
-	list.pop_front();
-	REQUIRE(*list.begin()==5);
+List<int> list;
+list.push_front(42);
+list.push_front(13);
+list.pop_front();
+REQUIRE(42 == list.front());
 }
 
-TEST_CASE("describe_popBack", "[popBack]")
+TEST_CASE("remove an added element with pop_back","[modifiers]")
 {
-	List<int> list{};
-	list.push_back(4);
-	list.pop_back();
-	REQUIRE(list.empty()==true);
-	list.push_back(5);
-	list.push_back(6);
-	list.pop_back();
-	REQUIRE(*list.end()==5);
+List<int> list;
+list.push_front(42);
+list.push_front(13);
+list.pop_back();
+REQUIRE(13 == list.back());
 }
 
-TEST_CASE("describe_clear", "[clear]")
+TEST_CASE("should be empty after clearing" , "[modifiers]")
 {
-	List<int> list{};
+	List<int> list;
+	list.push_front(1);
+	list.push_front(2);
 	list.push_front(3);
-	list.push_back(6);
+	list.push_front(4);
 	list.clear();
 	REQUIRE(list.empty()==true);
 }
 
-TEST_CASE("describe_emptyDefault", "[emptyDefault]")
+TEST_CASE("should be an empty range after default construction","[iterators]")
 {
 	List<int> list;
-	auto a = list.begin();
-	auto b = list.end();
-	REQUIRE(a==b);
+	auto b = list.begin();
+	auto e = list.end();
+	REQUIRE(b==e);
 }
 
-TEST_CASE("describe_beginIterator","[beginIterator]")
+TEST_CASE("provide acces to the first element with begin" , "[iterators]")
 {
 	List<int> list;
-	list.push_front(15);
-	REQUIRE(15==*list.begin());
+	list.push_front(42);
+	REQUIRE(42==*list.begin());
 }
 
-TEST_CASE("describe_operators", "[operators]")
+/*TEST_CASE("test operators", "[operators]")
 {
 	List<int> list1;
 	list1.push_front(1);
@@ -91,11 +81,13 @@ TEST_CASE("describe_operators", "[operators]")
 	REQUIRE(list1!=list2);
 }
 
-TEST_CASE("describe_copy", "[copy]")
+TEST_CASE("copy constructor", "[constructor]")
 {
 	List<int> list1;
 	list1.push_front(1);
-	list1.push_back(2);
+	list1.push_front (2);
+	list1.push_front (3);
+	list1.push_front (4);		
 	List<int> list2{list1};
 	REQUIRE(list1==list2);
 }
@@ -125,7 +117,7 @@ TEST_CASE("describe_move", "[move]")
 	REQUIRE(10==*list2.begin());
 	REQUIRE(20==*list2.end());
 }
-
+*/
 int main(int argc, char *argv[]){
 	return Catch::Session().run(argc,argv);
 }
